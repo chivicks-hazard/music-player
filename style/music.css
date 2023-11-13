@@ -1,0 +1,201 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Josefin Sans', sans-serif;
+	font-family: 'Space Mono', monospace;
+}
+
+#mpBody {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+}
+
+.mp {
+	width: 30%;
+	height: 80%;
+	/* box-shadow: -5px -5px 10px #898989, 
+				5px 5px 10px #ffffff; */
+	border-radius: 30px;
+	border: 2px solid;
+	transition: 2s;
+}
+
+.album-pic, .controls {
+	text-align: center;
+	margin-top: 5%;
+}
+
+.album-pic img {
+	width: 60%;
+	height: 60%;
+	margin: auto;
+}
+
+.album-pic .fa-music {
+	padding: 20%;
+	display: none;
+}
+
+.controls {
+	margin: 2% 0;
+}
+
+.controls i, .controls .playbtn {
+	cursor: pointer;
+	margin: 0 5%;
+}
+
+.playbtn {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: 45px;
+	aspect-ratio: 1;
+	border: 5px solid;
+	border-radius: 50%;
+}
+
+/* Click not responding */
+.playbtn .playPause:click {
+	background-color: red;
+}
+
+.song-details {
+	margin: 10% 0 0 10%;
+	font-size: 1.2rem;
+	line-height: 120%;
+}
+
+.song-details p {
+	margin: 1.5% 0;
+}
+
+.mpProgress {
+	height: 1%;
+	width: 80%;
+	border-radius: 50px;
+	cursor: pointer;
+	margin: auto;
+	border-style: inset;
+}
+
+.mpProgress .mpProgressBar {
+	height: 100%;
+	width: 0%;
+	border-radius: inherit;
+	position: relative;
+}
+
+.mpProgressBar::before, .mpVolumeSlider::before {
+	content: '';
+	position: relative;
+	height: 12px;
+	width: 12px;
+	border-radius: 50%;
+	top: 50%;
+	right: -5px;
+	z-index: 2;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-50%);
+	background-color: inherit;
+	transform: translateY(-50%);
+	background: inherit;
+	transition: opacity 0.2s ease;
+}
+
+.mpProgressBar, .mpVolumeSlider {
+	transition: width 0.5s;
+}
+
+.mpProgress:hover .mpProgressBar::before, .mpVolumeRange:hover .mpVolumeSlider::before {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.mpProgress .mpSongTime {
+	margin-top: 2px;
+}
+
+.mpSongTime span {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.max-time {
+	float: right;
+}
+
+.lightndark {
+	position: absolute;
+	top: 5%;
+	right: 6.5%;
+}
+
+.switch {
+	position: absolute;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0px;
+	height: 0px;
+}
+
+/*  The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: 0.4s;
+	-webkit-transition: 0.4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	transition: 0.4s;
+	-webkit-transition: 0.4s;
+/*	border: 1px solid black;*/
+}
+
+input:checked + .slider {
+	background-color: #2196f3;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	   -moz-transform: translateX(26px);
+	    -ms-transform: translateX(26px);
+	     -o-transform: translateX(26px);
+	        transform: translateX(26px);
+}
+
+/*  Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+/*	border: 1px solid black;*/
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Music Player</title>
+		<link rel="stylesheet" href="style/music.css">
+		<link rel="stylesheet" href="style/lightndark.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div id="mpBody" class="light">
+			<div class="mp light">
+				<div class="album-pic">
+					<img src="" alt="" id="albumCover">
+					<i class="fas fa-music fa-5x"></i>
+				</div>
+				<div class="controls fa-2x">
+					<i class="fas fa-step-backward"></i>
+					<div class="playbtn"><i class="fas fa-play playPause"></i></div>
+					<i class="fas fa-step-forward"></i>
+				</div>
+				<div class="mpProgress">
+					<div class="mpProgressBar"></div>
+					<div class="mpSongTime">
+						<span class="current-time">0:00</span>
+						<span class="max-time">0:00</span>
+					</div>
+				</div>
+				<audio src="" id="MP"></audio>
+				<div class="song-details">
+					<p></p>
+					<p></p>
+					<p></p>
+				</div>
+			</div>
+		</div>
+		<div class="lightndark">
+			<label class="switch">
+				<input type="checkbox">
+				<span class="slider round"></span>
+			</label>
+		</div>
+	<script src="script/music.js"></script>
+</body>
+</html>

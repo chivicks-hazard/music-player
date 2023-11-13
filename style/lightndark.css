@@ -1,0 +1,72 @@
+/* Light Mode */
+.light#mpBody {
+	background-color: #fafafa;
+}
+
+.light.mp {
+	background-color: #dfdfdf;
+	border-color: black;
+}
+
+.light.mp .fa-music {
+	background-color: #fff;
+}
+
+.dark.mp .controls i {
+	color: normal;
+}
+
+.light.mp .playbtn {
+	border-color: black;
+}
+
+.light.mp .mpProgress {
+	background-color: #f0f0f0;
+}
+
+.light.mp .mpProgress .mpProgressBar {
+	background-color: #898989;
+}
+
+.light.mp .mpSongTime span {
+	color: #000;
+}
+
+/* Dark Mode */
+.dark#mpBody {
+	background-color: #000;
+}
+
+.dark.mp {
+	background-color: #000;
+	border-color: white;
+	border-width: 5px;
+}
+
+.dark.mp .fa-music {
+	background-color: #fff;
+}
+
+.dark.mp .fas {
+	color: white;
+}
+
+.dark.mp .playbtn {
+	border-color: white;
+}
+
+.dark.mp .mpProgress {
+	background-color: #363636;
+}
+
+.dark.mp .mpProgress .mpProgressBar {
+	background-color: white;
+}
+
+.dark.mp .mpSongTime span {
+	color: white;
+}
+
+.dark.mp .song-details p {
+	color: white;
+}
