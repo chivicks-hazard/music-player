@@ -1,64 +1,115 @@
-/* No margin and margin on default */
 * {
 	margin: 0;
 	padding: 0;
 }
 
-/* Styles for the Music Player */
-#mpbody {
+#mpBody {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: lavenderblush;
+	background-color: #cdfeff;
 	width: 100vw;
 	height: 100vh;
 }
 
-/* The Music Player Itself 😉 */
 .mp {
-	width: 20%;
-	height: 50%;
-	padding: 5%;
-	margin-top: 50px;
-/*	border: 1px solid black;*/
-	background-color: #ffdef8;
+	background-color: #adfece;
+	width: 30%;
+	height: 75%;
 	box-shadow: -5px -5px 10px #898989, 
 				5px 5px 10px #ffffff;
-/*	backdrop-filter: blur(5px);*/
-	border-radius: 20px;
+	border-radius: 30px;
 }
 
-/* Every thing in the Album Pic and Controls divs will be centered */
 .album-pic, .controls {
 	text-align: center;
-/*	vertical-align: center;*/
+	margin-top: 5%;
 }
 
-/* Album cover if provided */
-.album-pic img{
-	width: 10rem;
-	height: 10rem;
+.album-pic img {
+	width: 60%;
+	height: 60%;
+	margin: auto;
 }
 
-
-/* If the album cover is not provided, this will serve */
 .album-pic .fa-music {
 	background-color: #fff;
-	padding: 30%;
-}
-
-/* JS will changed it */
-.album-pic i {
+	padding: 20%;
 	display: none;
 }
 
-/* The controls area */
-.controls {
-	margin-top: 15%;
-}
-
-/* The control button */
 .controls i {
 	cursor: pointer;
 	margin: 0 5%;
+}
+
+#seeker {
+	text-align: center;
+/*	margin: 0 0 0 20%;*/
+/*	width: 80%;*/
+}
+
+#seeker input[type='range'] {
+	width: 70%;
+}
+
+.song-details {
+	margin: 5% 0 0 10%;
+	font-size: 1.2rem;
+	line-height: 120%;
+/*	text-align: center;*/
+}
+
+.mpProgress {
+	height: 6px;
+	width: 80%;
+	border-radius: 50px;
+	background-color: #f0f0f081;
+	cursor: pointer;
+/*	text-align: center;*/
+	margin: auto;
+}
+
+.mpProgress .mpProgressBar {
+	height: inherit;
+	width: 0%;
+	border-radius: inherit;
+	background-color: #ffffff;
+	position: relative;
+}
+
+.mpProgressBar::before {
+	content: '';
+	position: relative;
+	height: 12px;
+	width: 12px;
+	border-radius: 50%;
+	top: 50%;
+	right: -5px;
+	z-index: 2;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-50%);
+	background-color: inherit;
+	transform: translateY(-50%);
+	background: inherit;
+	transition: opacity 0.2s ease;
+}
+
+.mpProgress:hover .mpProgressBar::before {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.mpProgress .mpSongTime {
+	margin-top: 2px;
+}
+
+.mpSongTime span {
+	font-size: 13px;
+	color: #000000;
+}
+
+.max-time {
+	float: right;
 }
