@@ -10,13 +10,13 @@
 	background-color: #cdfeff;
 	width: 100vw;
 	height: 100vh;
-	transition: background-color 3s;
+	transition: background-color 5s;
 }
 
 .mp {
 	background-color: #adfece;
 	width: 30%;
-	height: 75%;
+	height: 80%;
 	box-shadow: -5px -5px 10px #898989, 
 				5px 5px 10px #ffffff;
 	border-radius: 30px;
@@ -52,50 +52,104 @@
 }
 
 .mpProgress {
-	width: 75%;
-	max-width: 1000px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-}
-
-.seekSlider {
-	-webkit-appearance: none;
-	appearance: none;
-	height: 5px;
-	background: black;
-	opacity: 0.7;
-	-webkit-transition: 0.2s;
-	transition: opacity 0.2s;
-}
-
-.seekSlider::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 15px;
-	height: 15px;
-	background: white;
+	height: 1%;
+	width: 80%;
+	border-radius: 50px;
+	background-color: #f0f0f081;
 	cursor: pointer;
+	margin: auto;
+	border-style: inset;
+}
+
+.mpProgress .mpProgressBar {
+	height: 100%;
+	width: 0%;
+	border-radius: inherit;
+	background-color: #ffffff;
+	position: relative;
+}
+
+.mpProgressBar::before, .mpVolumeSlider::before {
+	content: '';
+	position: relative;
+	height: 12px;
+	width: 12px;
 	border-radius: 50%;
+	top: 50%;
+	right: -5px;
+	z-index: 2;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-50%);
+	background-color: inherit;
+	transform: translateY(-50%);
+	background: inherit;
+	transition: opacity 0.2s ease;
 }
 
-.seekSlider:hover {
-	opacity: 1.0;
+.mpProgressBar, .mpVolumeSlider {
+	transition: width 0.5s;
 }
 
-.seekSlider {
-	width: 60%;
+.mpProgress:hover .mpProgressBar::before, .mpVolumeRange:hover .mpVolumeSlider::before {
+	opacity: 1;
+	pointer-events: auto;
 }
 
-/*.max-time {
+.mpProgress .mpSongTime {
+	margin-top: 2px;
+}
+
+.mpSongTime span {
+	font-size: 13px;
+	color: #000000;
+}
+
+.max-time {
 	float: right;
-}*/
+}
 
-.songList {
-/*	*/
-/*	padding: 50px;*/
+.mpVolume {
+	height: 2%;
+	width: 80%;
+	margin: auto;
+	margin-top: 8%;
+}
 
+.mpVolume .fa-volume-up,
+.mpVolume .fa-volume-down,
+.mpVolume .fa-volume-off,
+.mpVolume .fa-volume-mute,
+.mpVolume .fa-angle-right,
+.mpVolume .fa-angle-left {
+	float: left;
+	cursor: pointer;
+	margin: 0 2%;
+	margin-left: 0;
+}
+
+.mpVolume .fa-angle-right,
+.mpVolume .fa-angle-left {
+	margin-left: 8%;
+	margin-right: 1%;
+}
+
+.mpVolume .mpVolumeRange {
+	height: 100%;
+	width: 68%;
+	border-radius: 50px;
+	margin-left: 10%;
+	background-color: #f0f0f081;
+	float: right;
+	border: inset;
+}
+
+.mpVolume .mpVolumeRange .mpVolumeSlider {
+	height: 100%;
+	width: 0%;
+	border-radius: inherit;
+	background-color: #ffffff;
+	position: relative;
 }
 
 .musicList {

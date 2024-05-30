@@ -92,6 +92,7 @@ const music = [
 		}
 ];
 
+var musicHolder = document.getElementById('mpbody');
 var musicPlayer = document.getElementById('MP');
 var play_n_pause_btn = document.querySelector('.playPause');
 var albumPic = document.getElementById('albumCover');
@@ -99,9 +100,13 @@ var noAlbumPic = document.querySelector('.fa-music');
 var next_btn = document.querySelector('.fa-step-forward');
 var prev_btn = document.querySelector('.fa-step-backward');
 var songDetails = document.querySelector('.song-details');
-var seekSlider = document.querySelector('.seekSlider')
+var progressArea = document.querySelector('.mpProgress');
+var progressBar = document.querySelector('.mpProgressBar');
 var current_play_time = document.querySelector('.current-time');
 var songTime = document.querySelector('.max-time');
+var volumeState = document.querySelector('.mpVolume .fas');
+var volumeHolder = document.querySelector('.mpVolumeRange');
+
 var SongList = document.querySelector('.musicList');
 var SongListItems = document.querySelectorAll('.musicListItem');
 var SongListPlayBtn = document.querySelectorAll('.musicListItem .fa-play');
@@ -123,8 +128,8 @@ class musicModule {
 		this.song_index = index;
 	}
 
-	loadMusic = function() {
-		const musicIndex = this.song_index;
+	loadMusic = function(index) {
+		const musicIndex = index;
 
 		musicPlayer.src = `media/music/${music[musicIndex].file}`;
 		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
@@ -160,7 +165,12 @@ class musicModule {
 		}
 
 
-		
+		SongListItems.forEach(function(a) {
+			if (songDetails.children[0].innerText === a.children[2].innerText) {
+				console.log('YES')
+			}
+		})
+
 		
 	}
 
@@ -177,8 +187,8 @@ class musicModule {
 		this.mp.ontimeupdate = function(player) {
 		const currentPlayTime = player.target.currentTime;
 		const playDuration = player.target.duration;
-		let seekPosition = (currentPlayTime / playDuration) * 100;
-		seekSlider.value = `${seekPosition}`;
+		let progressWidth = (currentPlayTime / playDuration) * 100;
+		progressBar.style.width = `${progressWidth}%`;
 
 		musicPlayer.addEventListener('loadeddata', function(playdata) {
 			let songDuration = playdata.target.duration;
@@ -201,17 +211,15 @@ class musicModule {
 
 		current_play_time.innerText = `${currentMin}:${currentSec}`;
 
-		let red = Math.floor(Math.random() * 256) + 64;
-		let green = Math.floor(Math.random() * 256) + 64;
-		let blue = Math.floor(Math.random() * 256) + 64;
+		let red = Math.floor(Math.random() * 256);
+		let green = Math.floor(Math.random() * 256);
+		let blue = Math.floor(Math.random() * 256);
 
 		let RGB = `rgb(${red}, ${green}, ${blue})`;
 
 		document.getElementById('mpBody').style.background = RGB;
 
 		}
-
-
 	}
 
 	playTime = function() {
@@ -221,27 +229,17 @@ class musicModule {
 	
 
 	nextSong = function() {
-		this.song_index++;
+		let musicIndex = this.song_index;
 
-		if (this.song_index > music.length - 1) {
-			this.song_index = 0;
+		musicIndex++;
+
+		if (musicIndex > music.length - 1) {
+			musicIndex = 0;
 		}
 
-		const musicIndex = this.song_index;
+		this.set_SI(musicIndex);
 
-		musicPlayer.src = `media/music/${music[musicIndex].file}`;
-		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
-		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
-		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
-
-		if (music[musicIndex].album_cover === '') {
-			albumPic.style.display = 'none';
-			noAlbumPic.style.display = 'block';
-		} else {
-			noAlbumPic.style.display = 'none';
-			albumPic.style.display = 'block';
-			albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
-		}
+		this.loadMusic(this.get_SI());
 
 		if (play_n_pause_btn.classList.contains('fa-play') === true) {
 			this.mp.pause();
@@ -258,25 +256,15 @@ class musicModule {
 	}
 
 	prevSong = function() {
-		if (this.song_index > 0) {
-			this.song_index--;
+		let musicIndex = this.song_index;
+
+		if (musicIndex > 0) {
+			musicIndex--;
 		}
 
-		const musicIndex = this.song_index;
+		this.set_SI(musicIndex);
 
-		musicPlayer.src = `media/music/${music[musicIndex].file}`;
-		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
-		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
-		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
-
-		if (music[musicIndex].album_cover === '') {
-			albumPic.style.display = 'none';
-			noAlbumPic.style.display = 'block';
-		} else {
-			noAlbumPic.style.display = 'none';
-			albumPic.style.display = 'block';
-			albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
-		}
+		this.loadMusic(this.get_SI());
 
 		if (play_n_pause_btn.classList.contains('fa-play') === true) {
 			this.mp.pause();
@@ -289,35 +277,7 @@ class musicModule {
 		}
 	}
 
-	/*loop = function() {
-		this.mp.onended = function(e) {
-			this.song_index++;
-
-			if (this.song_index > music.length - 1) {
-				this.song_index = 0;
-			}
-
-			const musicIndex = this.song_index;
-
-			musicPlayer.src = `media/music/${music[musicIndex].file}`;
-			songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
-			songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
-			songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
-
-			if (music[musicIndex].album_cover === '') {
-				albumPic.style.display = 'none';
-				noAlbumPic.style.display = 'block';
-			} else {
-				noAlbumPic.style.display = 'none';
-				albumPic.style.display = 'block';
-				albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
-			}
-
-			for (var i = 0; i < SongListItems.length; i++) {
-				SongListItems[i]
-			}
-		}
-	}*/
+	
 }
 
 const Player = new musicModule(music, musicPlayer, index);
@@ -337,23 +297,22 @@ next_btn.addEventListener('click', function() {
 
 prev_btn.addEventListener('click', function() {
 	Player.prevSong();
-	console.log(Player.get_SI());
 });
 
-window.onload = Player.loadMusic();
+window.onload = Player.loadMusic(Player.get_SI());
 
 Player.mp.onended = function() {
 	Player.nextSong();
-	console.log(Player.get_SI());
 }
 
-seekSlider.addEventListener('click', function(seek) {
-	let seekPosition = seek.value
+progressArea.addEventListener('click', function(seek) {
+	let progressWidth = progressArea.clientWidth;
+	let clickedOfffsetX = seek.offsetX;
 	let songDuration = musicPlayer.duration;
 
 	// console.log(clickedOfffsetX);
 
-	Player.mp.currentTime = (seekPosition / 100) * songDuration;
+	Player.mp.currentTime = (clickedOfffsetX / progressWidth) * songDuration;
 
 	if (play_n_pause_btn.classList.contains('fa-play') === true) {
 		Player.pauseMusic(play_n_pause_btn);
