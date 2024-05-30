@@ -1,0 +1,64 @@
+/* No margin and margin on default */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/* Styles for the Music Player */
+#mpbody {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: lavenderblush;
+	width: 100vw;
+	height: 100vh;
+}
+
+/* The Music Player Itself 😉 */
+.mp {
+	width: 20%;
+	height: 50%;
+	padding: 5%;
+	margin-top: 50px;
+/*	border: 1px solid black;*/
+	background-color: #ffdef8;
+	box-shadow: -5px -5px 10px #898989, 
+				5px 5px 10px #ffffff;
+/*	backdrop-filter: blur(5px);*/
+	border-radius: 20px;
+}
+
+/* Every thing in the Album Pic and Controls divs will be centered */
+.album-pic, .controls {
+	text-align: center;
+/*	vertical-align: center;*/
+}
+
+/* Album cover if provided */
+.album-pic img{
+	width: 10rem;
+	height: 10rem;
+}
+
+
+/* If the album cover is not provided, this will serve */
+.album-pic .fa-music {
+	background-color: #fff;
+	padding: 30%;
+}
+
+/* JS will changed it */
+.album-pic i {
+	display: none;
+}
+
+/* The controls area */
+.controls {
+	margin-top: 15%;
+}
+
+/* The control button */
+.controls i {
+	cursor: pointer;
+	margin: 0 5%;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Music Player</title>
+	<!-- The music.css file is for styles -->
+	<link rel="stylesheet" href="style/music.css">
+	<!-- Font Awesome 5 Free Icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+	<!-- The Music Player -->
+	<article id="mpbody">
+
+		<!-- The Music Player Itself 😉 -->
+		<div class="mp">
+
+			<!-- The Album Cover -->
+			<div class="album-pic">
+
+				<!-- Pics -->
+				<img src="" alt="An Album Pic">
+
+				<!-- No Pic -->
+				<i class="fas fa-music fa-5x"></i>
+			</div>
+
+			<!-- Controls -->
+			<div class="controls fa-2x">
+				<!-- Prev buttton -->
+				<i class="fas fa-step-backward"></i>
+				<!-- Play/Pause button. 'playPause' is for Identity in .js file -->
+				<i class="fas fa-play playPause"></i>
+				<!-- Next button -->
+				<i class="fas fa-step-forward"></i>
+			</div>
+			<!-- The audio player -->
+			<audio src="" id="Music"></audio>
+			<!-- This was used for the Play/Pause button -->
+			<p id="check">Pause</p>
+			<!-- The song's name -->
+			<p id="mpName"></p>
+		</div>
+	</article>
+	<!-- The music.js file is for functionality -->
+	<script type="text/javascript" src="script/music.js"></script>
+</body>
+</html>
