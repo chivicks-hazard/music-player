@@ -92,7 +92,6 @@ const music = [
 		}
 ];
 
-var musicHolder = document.getElementById('mpbody');
 var musicPlayer = document.getElementById('MP');
 var play_n_pause_btn = document.querySelector('.playPause');
 var albumPic = document.getElementById('albumCover');
@@ -100,8 +99,7 @@ var noAlbumPic = document.querySelector('.fa-music');
 var next_btn = document.querySelector('.fa-step-forward');
 var prev_btn = document.querySelector('.fa-step-backward');
 var songDetails = document.querySelector('.song-details');
-var progressArea = document.querySelector('.mpProgress');
-var progressBar = document.querySelector('.mpProgressBar');
+var seekSlider = document.querySelector('.seekSlider')
 var current_play_time = document.querySelector('.current-time');
 var songTime = document.querySelector('.max-time');
 var SongList = document.querySelector('.musicList');
@@ -162,12 +160,7 @@ class musicModule {
 		}
 
 
-		SongListItems.forEach(function(a) {
-			if (songDetails.children[0].innerText === a.children[2].innerText) {
-				console.log('YES')
-			}
-		})
-
+		
 		
 	}
 
@@ -182,10 +175,10 @@ class musicModule {
 
 	displayTime = function() {
 		this.mp.ontimeupdate = function(player) {
-			const currentPlayTime = player.target.currentTime;
+		const currentPlayTime = player.target.currentTime;
 		const playDuration = player.target.duration;
-		let progressWidth = (currentPlayTime / playDuration) * 100;
-		progressBar.style.width = `${progressWidth}%`;
+		let seekPosition = (currentPlayTime / playDuration) * 100;
+		seekSlider.value = `${seekPosition}`;
 
 		musicPlayer.addEventListener('loadeddata', function(playdata) {
 			let songDuration = playdata.target.duration;
@@ -208,7 +201,17 @@ class musicModule {
 
 		current_play_time.innerText = `${currentMin}:${currentSec}`;
 
+		let red = Math.floor(Math.random() * 256) + 64;
+		let green = Math.floor(Math.random() * 256) + 64;
+		let blue = Math.floor(Math.random() * 256) + 64;
+
+		let RGB = `rgb(${red}, ${green}, ${blue})`;
+
+		document.getElementById('mpBody').style.background = RGB;
+
 		}
+
+
 	}
 
 	playTime = function() {
@@ -344,14 +347,13 @@ Player.mp.onended = function() {
 	console.log(Player.get_SI());
 }
 
-progressArea.addEventListener('click', function(seek) {
-	let progressWidth = progressArea.clientWidth;
-	let clickedOfffsetX = seek.offsetX;
+seekSlider.addEventListener('click', function(seek) {
+	let seekPosition = seek.value
 	let songDuration = musicPlayer.duration;
 
 	// console.log(clickedOfffsetX);
 
-	Player.mp.currentTime = (clickedOfffsetX / progressWidth) * songDuration;
+	Player.mp.currentTime = (seekPosition / 100) * songDuration;
 
 	if (play_n_pause_btn.classList.contains('fa-play') === true) {
 		Player.pauseMusic(play_n_pause_btn);
