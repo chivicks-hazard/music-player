@@ -61,21 +61,23 @@
 }
 
 .mpProgress {
-	height: 6px;
+	height: 1%;
 	width: 80%;
 	border-radius: 50px;
 	background-color: #f0f0f081;
 	cursor: pointer;
 /*	text-align: center;*/
 	margin: auto;
+	border-style: inset;
 }
 
 .mpProgress .mpProgressBar {
-	height: inherit;
+	height: 100%;
 	width: 0%;
 	border-radius: inherit;
 	background-color: #ffffff;
 	position: relative;
+/*	border-style: groove;*/
 }
 
 .mpProgressBar::before {
@@ -112,4 +114,112 @@
 
 .max-time {
 	float: right;
+}
+
+.songList {
+/*	*/
+/*	padding: 50px;*/
+
+}
+
+.musicList {
+	background-color: #adfece;
+	padding: 0.5%;
+	height: 75%;
+/*	padding-left: 2%;*/
+	list-style: none;
+	margin-left: 0px;
+	border-radius: 15px;
+	box-shadow: 5px 5px 10px #ffffff,
+				-5px -5px 10px #898989;
+	transition: 3s ease;
+	overflow-y: scroll;
+	margin-left: 2%;
+/*	display: none;*/
+/*	transform: scale(0, 0);*/
+/*	width: 0%;*/
+}
+
+/*.musicList::-webkit-scrollbar {
+	width: 50px;
+}*/
+
+/*.musicList::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+	border-radius: 15px;
+	background-color: white;
+}*/
+
+/*.musicList::-webkit-scrollbar-track-piece {*/
+/*	background-color: grey;*/
+/*}*/
+
+/*/.musicList::-webkit-scrollbar-thumb {*/
+/*	background-color: #006789;*/
+/*	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);*/
+/*	border-radius: 15px;*/
+/*}*/
+
+.musicListItem {
+	border: 1px solid black;
+	margin: 0.9% 0;
+/*	height: 100%;*/
+/*	width: 90%;*/
+	padding: 3%;
+	border-radius: 20px;
+	transition: 1s ease;
+	transform: scale(0.9, 0.9);
+}
+
+.musicListItem:hover {
+	transform: scale(1, 1);
+	margin: 1% 0;
+}
+
+.musicListItem img {
+	width: 12%;
+	height: 12%;
+	border-radius: 50%;
+	padding: 0%;
+	float: left;
+}
+
+.musicListItem p {
+	margin-left: 15%;
+}
+
+.musicListItem .song {
+	margin-bottom: 1%;
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+
+.musicListItem .artist, .musicListItem .album {
+	font-size: 0.9rem;
+}
+
+.musicListItem .Play_Pause {
+	float: right;
+	cursor: pointer;
+}
+
+/*.musicListItem img, 
+.musicListItem .fa-play,
+.musicListItem .song,
+.musicListItem .artist,
+.musicListItem .album {
+	transform: scale(0, 0);
+}*/
+
+.list-control {
+	float: right;
+	font-size: 1.5rem;
+	background-color: #adfedd;
+	border: outset;
+	padding: 1%;
+	font-weight: bold;
+}
+
+.list-control:active {
+	border: ridge;
 }

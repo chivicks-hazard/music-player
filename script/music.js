@@ -92,6 +92,7 @@ const music = [
 		}
 ];
 
+var musicHolder = document.getElementById('mpbody');
 var musicPlayer = document.getElementById('MP');
 var play_n_pause_btn = document.querySelector('.playPause');
 var albumPic = document.getElementById('albumCover');
@@ -103,8 +104,13 @@ var progressArea = document.querySelector('.mpProgress');
 var progressBar = document.querySelector('.mpProgressBar');
 var current_play_time = document.querySelector('.current-time');
 var songTime = document.querySelector('.max-time');
+var SongList = document.querySelector('.musicList');
+var SongListItems = document.querySelectorAll('.musicListItem');
+var SongListPlayBtn = document.querySelectorAll('.musicListItem .fa-play');
+
 var index = 0;
 
+console.time('load');
 // Event Listeners
 window.onload = loadMusic(index);
 
@@ -118,15 +124,21 @@ musicPlayer.addEventListener('timeupdate', playTime);
 
 progressArea.addEventListener('click', seekPlay);
 
+SongListItems.forEach(function(e) {
+
+	e.addEventListener('click', PlayPause);
+
+});
+
 
 //Functions
 // Loading the 'CDs' from the music array of objects 😉 
 function loadMusic(musicIndex) {
-	// body...
 	musicPlayer.src = `media/music/${music[musicIndex].file}`;
 	songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
 	songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
 	songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
+
 	if (music[musicIndex].album_cover === '') {
 		albumPic.style.display = 'none';
 		noAlbumPic.style.display = 'block';
@@ -136,7 +148,38 @@ function loadMusic(musicIndex) {
 		albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
 	}
 
+
+	SongListItems.forEach(function(a) {
+		a.children[0].src = `media/pic/${music[a.dataset.index].album_cover}`
+		a.children[2].innerText = music[a.dataset.index].name;
+		a.children[3].innerText = music[a.dataset.index].artist;
+		a.children[4].innerText = music[a.dataset.index].album;
+	})
+
 }
+
+
+
+SongListItems.forEach(function(d) {
+		d.addEventListener('click', function(i) {
+			musicPlayer.src = `media/music/${music[d.dataset.index].file}`;
+			albumPic.src = `media/pic/${music[d.dataset.index].album_cover}`;
+			songDetails.children[0].innerText = `Name: ${music[d.dataset.index].name}`;
+	songDetails.children[1].innerText = `Artist: ${music[d.dataset.index].artist}`;
+	songDetails.children[2].innerText = `Album: ${music[d.dataset.index].album}`;
+			playMusic();
+
+			/*if (songDetails.children[0].includes(d.children[2].innerText) === true) {
+				console.log('Yes');
+			}*/
+		})
+})
+
+
+SongListItems.forEach(function(e) {
+	console.log(e.children[1].classList);
+})
+
 
 // For the play and pause button
 function PlayPause() {
@@ -145,12 +188,13 @@ function PlayPause() {
 		playMusic();
 	} else {
 		pauseMusic();
-	}	
+	}
+
 	
 }
 
 // For playing
-function playMusic(argument) {
+function playMusic() {
 	musicPlayer.play();
 	if (play_n_pause_btn.classList.contains('fa-play') === true) {
 		play_n_pause_btn.classList.remove('fa-play');
@@ -160,7 +204,7 @@ function playMusic(argument) {
 }
 
 // For pausing, if that is a word
-function pauseMusic(argument) {
+function pauseMusic() {
 	musicPlayer.pause();
 	if (play_n_pause_btn.classList.contains('fa-pause') === true) {
 		play_n_pause_btn.classList.remove('fa-pause');
@@ -172,7 +216,6 @@ function pauseMusic(argument) {
 function nextSong() {
 	// body...
 	index++;
-	console.log(index);
 	
 	
 	if (index > music.length - 1) {
@@ -256,3 +299,9 @@ function seekPlay(seek) {
 
 
 }
+
+function song_list_dp() {
+	
+}
+
+console.timeEnd('load');
