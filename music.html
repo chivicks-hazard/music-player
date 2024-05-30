@@ -5,19 +5,22 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Music Player</title>
 		<link rel="stylesheet" href="style/music.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+		<link rel="stylesheet" href="style/lightndark.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<article id="mpBody">
-			<div class="mp">
+		<div id="mpBody" class="light">
+			<div class="mp light">
 				<div class="album-pic">
 					<img src="" alt="" id="albumCover">
 					<i class="fas fa-music fa-5x"></i>
 				</div>
-				<!-- <button class="list-control">&gt;</button> -->
 				<div class="controls fa-2x">
 					<i class="fas fa-step-backward"></i>
-					<i class="fas fa-play playPause"></i>
+					<div class="playbtn"><i class="fas fa-play playPause"></i></div>
 					<i class="fas fa-step-forward"></i>
 				</div>
 				<div class="mpProgress">
@@ -27,114 +30,20 @@
 						<span class="max-time">0:00</span>
 					</div>
 				</div>
-				<div class="mpVolume">
-					<i class="fas fa-volume-up"></i>
-					<i class="fas fa-angle-right"></i>
-					<span class="mpVolumeRange">
-						<span class="mpVolumeSlider"></span>
-					</span>
+				<audio src="" id="MP"></audio>
+				<div class="song-details">
+					<p></p>
+					<p></p>
+					<p></p>
 				</div>
-			<audio src="" id="MP"></audio>
-			<div class="song-details">
-				<p></p>
-				<p></p>
-				<p></p>
 			</div>
 		</div>
-		<ul class="musicList">
-				<li class="musicListItem" data-index="0">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="1">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="2">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="3">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="4">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="5">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="6">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="7">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="8">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="9">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="10">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="11">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-				<li class="musicListItem" data-index="12">
-					<img src="" alt="">
-					<i class="fas fa-play Play_Pause"></i>
-					<p class="song"></p>
-					<p class="artist"></p>
-					<p class="album"></p>
-				</li>
-			</ul>
-	</article>
+		<div class="lightndark">
+			<label class="switch">
+				<input type="checkbox">
+				<span class="slider round"></span>
+			</label>
+		</div>
 	<script src="script/music.js"></script>
 </body>
 </html>

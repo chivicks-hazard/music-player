@@ -22,3 +22,7 @@ A seek slider was added to the app but it affected the UI of the main module. A 
 ## The Sixth Version
 The slider was reverted to its previous state but with the addition of a volume slider was not successful, the UI was still distorted. The colors for the background are more saturated.
 ![The sixth version](doc-pics/v6.PNG)
+
+## The Seventh Version (Third Design Overhaul)
+In order to bring 'everything at peace', thr playlist was dropped out in favour of a minimalist design. Google Fonts were incoporated into the project. The random RGB was given to the border lines of the main module and dark mode was also introduced into the build.
+![The seventh version](doc-pics/v7.PNG)

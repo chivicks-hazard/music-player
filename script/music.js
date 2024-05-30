@@ -92,8 +92,9 @@ const music = [
 		}
 ];
 
-var musicHolder = document.getElementById('mpbody');
-var musicPlayer = document.getElementById('MP');
+var musicHolder = document.getElementById('mpBody');
+var musicPlayer = document.querySelector('.mp');
+var musicAudioPlayer = document.getElementById('MP');
 var play_n_pause_btn = document.querySelector('.playPause');
 var albumPic = document.getElementById('albumCover');
 var noAlbumPic = document.querySelector('.fa-music');
@@ -106,10 +107,7 @@ var current_play_time = document.querySelector('.current-time');
 var songTime = document.querySelector('.max-time');
 var volumeState = document.querySelector('.mpVolume .fas');
 var volumeHolder = document.querySelector('.mpVolumeRange');
-
-var SongList = document.querySelector('.musicList');
-var SongListItems = document.querySelectorAll('.musicListItem');
-var SongListPlayBtn = document.querySelectorAll('.musicListItem .fa-play');
+var lightNDarkSwitch = document.querySelector('.lightndark .switch input[type="checkbox"]');
 
 var index = 0;
 
@@ -131,7 +129,7 @@ class musicModule {
 	loadMusic = function(index) {
 		const musicIndex = index;
 
-		musicPlayer.src = `media/music/${music[musicIndex].file}`;
+		musicAudioPlayer.src = `media/music/${music[musicIndex].file}`;
 		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
 		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
 		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
@@ -145,20 +143,11 @@ class musicModule {
 			albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
 		}
 
-
-		SongListItems.forEach(function(a) {
-			a.children[0].src = `media/pic/${music[a.dataset.index].album_cover}`
-			a.children[2].innerText = music[a.dataset.index].name;
-			a.children[3].innerText = music[a.dataset.index].artist;
-			a.children[4].innerText = music[a.dataset.index].album;
-		})
-
-
 	}
 
 	playMusic = function(playBtn) {
 		this.mp.play();
-		if (playBtn.classList.contains('fa-play') === true) {
+		if (playBtn.classList.contains('fa-play')) {
 			playBtn.classList.remove('fa-play');
 			playBtn.classList.add('fa-pause');
 			
@@ -177,7 +166,7 @@ class musicModule {
 // For pausing, if that is a word
 	pauseMusic = function(playBtn) {
 		this.mp.pause();
-		if (playBtn.classList.contains('fa-pause') === true) {
+		if (playBtn.classList.contains('fa-pause')) {
 			playBtn.classList.remove('fa-pause');
 			playBtn.classList.add('fa-play');
 		}
@@ -185,40 +174,47 @@ class musicModule {
 
 	displayTime = function() {
 		this.mp.ontimeupdate = function(player) {
-		const currentPlayTime = player.target.currentTime;
-		const playDuration = player.target.duration;
-		let progressWidth = (currentPlayTime / playDuration) * 100;
-		progressBar.style.width = `${progressWidth}%`;
+			const currentPlayTime = player.target.currentTime;
+			const playDuration = player.target.duration;
+			let progressWidth = (currentPlayTime / playDuration) * 100;
+			progressBar.style.width = `${progressWidth}%`;
 
-		musicPlayer.addEventListener('loadeddata', function(playdata) {
-			let songDuration = playdata.target.duration;
-			let totalMin = Math.floor(songDuration / 60);
-			let totalSec = Math.floor(songDuration % 60);
+			musicAudioPlayer.addEventListener('loadeddata', function(playdata) {
+				let songDuration = playdata.target.duration;
+				let totalMin = Math.floor(songDuration / 60);
+				let totalSec = Math.floor(songDuration % 60);
 
-			if (totalSec < 10) {
-				totalSec = `0${totalSec}`;
+				if (totalSec < 10) {
+					totalSec = `0${totalSec}`;
+				}
+
+				songTime.innerText = `${totalMin}:${totalSec}`;
+			})
+
+			let currentMin = Math.floor(currentPlayTime / 60);
+			let currentSec = Math.floor(currentPlayTime % 60);
+
+			if (currentSec < 10) {
+				currentSec = `0${currentSec}`;
 			}
 
-			songTime.innerText = `${totalMin}:${totalSec}`;
-		})
-
-		let currentMin = Math.floor(currentPlayTime / 60);
-		let currentSec = Math.floor(currentPlayTime % 60);
-
-		if (currentSec < 10) {
-			currentSec = `0${currentSec}`;
+			current_play_time.innerText = `${currentMin}:${currentSec}`;
 		}
+	}
 
-		current_play_time.innerText = `${currentMin}:${currentSec}`;
+	changeColor = function(player) {
+		this.mp.ontimeupdate = function() {
+			
 
-		let red = Math.floor(Math.random() * 256);
-		let green = Math.floor(Math.random() * 256);
-		let blue = Math.floor(Math.random() * 256);
+			let red = Math.floor((Math.random() * 256) + 50);
+			let green = Math.floor((Math.random() * 256) + 50);
+			let blue = Math.floor((Math.random() * 256) + 50);
 
-		let RGB = `rgb(${red}, ${green}, ${blue})`;
+			let RGB = `rgb(${red}, ${green}, ${blue})`;
 
-		document.getElementById('mpBody').style.background = RGB;
-
+			let musicBG = document.querySelector('.mp');
+			musicBG.style.borderColor = RGB;
+			musicBG.style.boxShadow = `0 0 10px 5px ${RGB}`;
 		}
 	}
 
@@ -247,7 +243,7 @@ class musicModule {
 			this.mp.play();
 		}
 
-		if (musicPlayer.currentTime === 0) {
+		if (musicAudioPlayer.currentTime === 0) {
 			progressBar.style.width = '0';
 		}
 
@@ -272,7 +268,7 @@ class musicModule {
 			this.mp.play();
 		}
 
-		if (musicPlayer.currentTime === 0) {
+		if (musicAudioPlayer.currentTime === 0) {
 			progressBar.style.width = '0';
 		}
 	}
@@ -280,13 +276,12 @@ class musicModule {
 	
 }
 
-const Player = new musicModule(music, musicPlayer, index);
+const Player = new musicModule(music, musicAudioPlayer, index);
 
 Player.displayTime();
 
 next_btn.addEventListener('click', function() {
 	Player.nextSong();
-	// console.log(Player.get_SI());
 
 	SongListItems.forEach((a) => {
 		if (Player.get_SI() === a.dataset.index) {
@@ -308,10 +303,7 @@ Player.mp.onended = function() {
 progressArea.addEventListener('click', function(seek) {
 	let progressWidth = progressArea.clientWidth;
 	let clickedOfffsetX = seek.offsetX;
-	let songDuration = musicPlayer.duration;
-
-	// console.log(clickedOfffsetX);
-
+	let songDuration = musicAudioPlayer.duration;
 	Player.mp.currentTime = (clickedOfffsetX / progressWidth) * songDuration;
 
 	if (play_n_pause_btn.classList.contains('fa-play') === true) {
@@ -321,8 +313,8 @@ progressArea.addEventListener('click', function(seek) {
 
 })
 
-
 play_n_pause_btn.addEventListener('click', function() {
+	console.log(1);
 	if (play_n_pause_btn.classList.contains('fa-play') === true) {
 		Player.playMusic(play_n_pause_btn);
 	} else {
@@ -330,23 +322,20 @@ play_n_pause_btn.addEventListener('click', function() {
 	}
 });
 
-SongListItems.forEach(function(d) {
-	d.addEventListener('click', function() {
-		Player.set_SI(d.dataset.index);
-		const musicIndex = Player.song_index
-		Player.mp.src = `media/music/${music[musicIndex].file}`;
-		albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
-		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
-		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
-		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
-		Player.playMusic(play_n_pause_btn);
+lightNDarkSwitch.addEventListener('change', (e) => {
+	if (e.target.checked) {
+		musicHolder.classList.remove('light');
+		musicHolder.classList.add('dark');
 
-	})
+		musicPlayer.classList.remove('light');
+		musicPlayer.classList.add('dark');
 
+		Player.changeColor();
+	} else {
+		musicHolder.classList.remove('dark');
+		musicHolder.classList.add('light');
 
+		musicPlayer.classList.remove('dark');
+		musicPlayer.classList.add('light');
+	}
 })
-
-
-console.dir(Player.mp);	
-
-console.dir(SongListItems[0]);
