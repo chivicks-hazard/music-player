@@ -110,198 +110,282 @@ var SongListPlayBtn = document.querySelectorAll('.musicListItem .fa-play');
 
 var index = 0;
 
-console.time('load');
-// Event Listeners
-window.onload = loadMusic(index);
-
-play_n_pause_btn.addEventListener('click', PlayPause)
-
-next_btn.addEventListener('click', nextSong);
-
-prev_btn.addEventListener('click', prevSong);
-
-musicPlayer.addEventListener('timeupdate', playTime);
-
-progressArea.addEventListener('click', seekPlay);
-
-SongListItems.forEach(function(e) {
-
-	e.addEventListener('click', PlayPause);
-
-});
-
-
-//Functions
-// Loading the 'CDs' from the music array of objects 😉 
-function loadMusic(musicIndex) {
-	musicPlayer.src = `media/music/${music[musicIndex].file}`;
-	songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
-	songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
-	songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
-
-	if (music[musicIndex].album_cover === '') {
-		albumPic.style.display = 'none';
-		noAlbumPic.style.display = 'block';
-	} else {
-		noAlbumPic.style.display = 'none';
-		albumPic.style.display = 'block';
-		albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
+class musicModule {
+	constructor(mp_db, mp, song_index) {
+		this.mp_db = mp_db;
+		this.mp = mp;
+		this.song_index = song_index;
 	}
 
-
-	SongListItems.forEach(function(a) {
-		a.children[0].src = `media/pic/${music[a.dataset.index].album_cover}`
-		a.children[2].innerText = music[a.dataset.index].name;
-		a.children[3].innerText = music[a.dataset.index].artist;
-		a.children[4].innerText = music[a.dataset.index].album;
-	})
-
-}
-
-
-
-SongListItems.forEach(function(d) {
-		d.addEventListener('click', function(i) {
-			musicPlayer.src = `media/music/${music[d.dataset.index].file}`;
-			albumPic.src = `media/pic/${music[d.dataset.index].album_cover}`;
-			songDetails.children[0].innerText = `Name: ${music[d.dataset.index].name}`;
-	songDetails.children[1].innerText = `Artist: ${music[d.dataset.index].artist}`;
-	songDetails.children[2].innerText = `Album: ${music[d.dataset.index].album}`;
-			playMusic();
-
-			/*if (songDetails.children[0].includes(d.children[2].innerText) === true) {
-				console.log('Yes');
-			}*/
-		})
-})
-
-
-SongListItems.forEach(function(e) {
-	console.log(e.children[1].classList);
-})
-
-
-// For the play and pause button
-function PlayPause() {
-
-	if (play_n_pause_btn.classList.contains('fa-play') === true) {
-		playMusic();
-	} else {
-		pauseMusic();
+	get_SI = function() {
+		return this.song_index;
 	}
 
-	
-}
-
-// For playing
-function playMusic() {
-	musicPlayer.play();
-	if (play_n_pause_btn.classList.contains('fa-play') === true) {
-		play_n_pause_btn.classList.remove('fa-play');
-		play_n_pause_btn.classList.add('fa-pause');
-		
-	}
-}
-
-// For pausing, if that is a word
-function pauseMusic() {
-	musicPlayer.pause();
-	if (play_n_pause_btn.classList.contains('fa-pause') === true) {
-		play_n_pause_btn.classList.remove('fa-pause');
-		play_n_pause_btn.classList.add('fa-play');
-	}
-}
-
-// This gives the Play Next button its function
-function nextSong() {
-	// body...
-	index++;
-	
-	
-	if (index > music.length - 1) {
-		index = 0;
+	set_SI = function(index) {
+		this.song_index = index;
 	}
 
-	loadMusic(index);
+	loadMusic = function() {
+		const musicIndex = this.song_index;
 
-	if (play_n_pause_btn.classList.contains('fa-play') === true) {
-		pauseMusic();
-	} else {
-		playMusic();
-	}
+		musicPlayer.src = `media/music/${music[musicIndex].file}`;
+		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
+		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
+		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
 
-	if (musicPlayer.currentTime === 0) {
-		progressBar.style.width = '0';
-	}
-}
-
-// This gives the Play Prev button its function
-function prevSong() {
-	if (index > 0) {
-		index--;
-	}
-
-	loadMusic(index);
-
-	if (play_n_pause_btn.classList.contains('fa-play') === true) {
-		pauseMusic();
-	} else {
-		playMusic();
-	}
-
-	if (musicPlayer.currentTime === 0) {
-		progressBar.style.width = '0';
-	}
-}
-
-// For the progress bar and song timers
-function playTime(player) {
-	const currentPlayTime = player.target.currentTime;
-	const playDuration = player.target.duration;
-	let progressWidth = (currentPlayTime / playDuration) * 100;
-	progressBar.style.width = `${progressWidth}%`;
-
-	musicPlayer.addEventListener('loadeddata', function(playdata) {
-		let songDuration = playdata.target.duration;
-		let totalMin = Math.floor(songDuration / 60);
-		let totalSec = Math.floor(songDuration % 60);
-
-		if (totalSec < 10) {
-			totalSec = `0${totalSec}`;
+		if (music[musicIndex].album_cover === '') {
+			albumPic.style.display = 'none';
+			noAlbumPic.style.display = 'block';
+		} else {
+			noAlbumPic.style.display = 'none';
+			albumPic.style.display = 'block';
+			albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
 		}
 
-		songTime.innerText = `${totalMin}:${totalSec}`;
-	})
 
-	let currentMin = Math.floor(currentPlayTime / 60);
-	let currentSec = Math.floor(currentPlayTime % 60);
+		SongListItems.forEach(function(a) {
+			a.children[0].src = `media/pic/${music[a.dataset.index].album_cover}`
+			a.children[2].innerText = music[a.dataset.index].name;
+			a.children[3].innerText = music[a.dataset.index].artist;
+			a.children[4].innerText = music[a.dataset.index].album;
+		})
 
-	if (currentSec < 10) {
-		currentSec = `0${currentSec}`;
+
 	}
 
-	current_play_time.innerText = `${currentMin}:${currentSec}`;
+	playMusic = function(playBtn) {
+		this.mp.play();
+		if (playBtn.classList.contains('fa-play') === true) {
+			playBtn.classList.remove('fa-play');
+			playBtn.classList.add('fa-pause');
+			
+		}
+
+
+		SongListItems.forEach(function(a) {
+			if (songDetails.children[0].innerText === a.children[2].innerText) {
+				console.log('YES')
+			}
+		})
+
+		
+	}
+
+// For pausing, if that is a word
+	pauseMusic = function(playBtn) {
+		this.mp.pause();
+		if (playBtn.classList.contains('fa-pause') === true) {
+			playBtn.classList.remove('fa-pause');
+			playBtn.classList.add('fa-play');
+		}
+	}
+
+	displayTime = function() {
+		this.mp.ontimeupdate = function(player) {
+			const currentPlayTime = player.target.currentTime;
+		const playDuration = player.target.duration;
+		let progressWidth = (currentPlayTime / playDuration) * 100;
+		progressBar.style.width = `${progressWidth}%`;
+
+		musicPlayer.addEventListener('loadeddata', function(playdata) {
+			let songDuration = playdata.target.duration;
+			let totalMin = Math.floor(songDuration / 60);
+			let totalSec = Math.floor(songDuration % 60);
+
+			if (totalSec < 10) {
+				totalSec = `0${totalSec}`;
+			}
+
+			songTime.innerText = `${totalMin}:${totalSec}`;
+		})
+
+		let currentMin = Math.floor(currentPlayTime / 60);
+		let currentSec = Math.floor(currentPlayTime % 60);
+
+		if (currentSec < 10) {
+			currentSec = `0${currentSec}`;
+		}
+
+		current_play_time.innerText = `${currentMin}:${currentSec}`;
+
+		}
+	}
+
+	playTime = function() {
+		return this.mp.duration;
+	}
+
+	
+
+	nextSong = function() {
+		this.song_index++;
+
+		if (this.song_index > music.length - 1) {
+			this.song_index = 0;
+		}
+
+		const musicIndex = this.song_index;
+
+		musicPlayer.src = `media/music/${music[musicIndex].file}`;
+		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
+		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
+		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
+
+		if (music[musicIndex].album_cover === '') {
+			albumPic.style.display = 'none';
+			noAlbumPic.style.display = 'block';
+		} else {
+			noAlbumPic.style.display = 'none';
+			albumPic.style.display = 'block';
+			albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
+		}
+
+		if (play_n_pause_btn.classList.contains('fa-play') === true) {
+			this.mp.pause();
+		} else {
+			this.mp.play();
+		}
+
+		if (musicPlayer.currentTime === 0) {
+			progressBar.style.width = '0';
+		}
+
+		
+		
+	}
+
+	prevSong = function() {
+		if (this.song_index > 0) {
+			this.song_index--;
+		}
+
+		const musicIndex = this.song_index;
+
+		musicPlayer.src = `media/music/${music[musicIndex].file}`;
+		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
+		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
+		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
+
+		if (music[musicIndex].album_cover === '') {
+			albumPic.style.display = 'none';
+			noAlbumPic.style.display = 'block';
+		} else {
+			noAlbumPic.style.display = 'none';
+			albumPic.style.display = 'block';
+			albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
+		}
+
+		if (play_n_pause_btn.classList.contains('fa-play') === true) {
+			this.mp.pause();
+		} else {
+			this.mp.play();
+		}
+
+		if (musicPlayer.currentTime === 0) {
+			progressBar.style.width = '0';
+		}
+	}
+
+	/*loop = function() {
+		this.mp.onended = function(e) {
+			this.song_index++;
+
+			if (this.song_index > music.length - 1) {
+				this.song_index = 0;
+			}
+
+			const musicIndex = this.song_index;
+
+			musicPlayer.src = `media/music/${music[musicIndex].file}`;
+			songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
+			songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
+			songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
+
+			if (music[musicIndex].album_cover === '') {
+				albumPic.style.display = 'none';
+				noAlbumPic.style.display = 'block';
+			} else {
+				noAlbumPic.style.display = 'none';
+				albumPic.style.display = 'block';
+				albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
+			}
+
+			for (var i = 0; i < SongListItems.length; i++) {
+				SongListItems[i]
+			}
+		}
+	}*/
 }
 
-// If the progress bar is clicked at any point
-function seekPlay(seek) {
+const Player = new musicModule(music, musicPlayer, index);
+
+Player.displayTime();
+
+next_btn.addEventListener('click', function() {
+	Player.nextSong();
+	// console.log(Player.get_SI());
+
+	SongListItems.forEach((a) => {
+		if (Player.get_SI() === a.dataset.index) {
+			console.log('YES');
+		}
+	})
+});
+
+prev_btn.addEventListener('click', function() {
+	Player.prevSong();
+	console.log(Player.get_SI());
+});
+
+window.onload = Player.loadMusic();
+
+Player.mp.onended = function() {
+	Player.nextSong();
+	console.log(Player.get_SI());
+}
+
+progressArea.addEventListener('click', function(seek) {
 	let progressWidth = progressArea.clientWidth;
 	let clickedOfffsetX = seek.offsetX;
 	let songDuration = musicPlayer.duration;
 
 	// console.log(clickedOfffsetX);
 
-	musicPlayer.currentTime = (clickedOfffsetX / progressWidth) * songDuration;
+	Player.mp.currentTime = (clickedOfffsetX / progressWidth) * songDuration;
 
 	if (play_n_pause_btn.classList.contains('fa-play') === true) {
-		pauseMusic();
+		Player.pauseMusic(play_n_pause_btn);
 	}
 
 
-}
+})
 
-function song_list_dp() {
-	
-}
 
-console.timeEnd('load');
+play_n_pause_btn.addEventListener('click', function() {
+	if (play_n_pause_btn.classList.contains('fa-play') === true) {
+		Player.playMusic(play_n_pause_btn);
+	} else {
+		Player.pauseMusic(play_n_pause_btn);
+	}
+});
+
+SongListItems.forEach(function(d) {
+	d.addEventListener('click', function() {
+		Player.set_SI(d.dataset.index);
+		const musicIndex = Player.song_index
+		Player.mp.src = `media/music/${music[musicIndex].file}`;
+		albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
+		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
+		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
+		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
+		Player.playMusic(play_n_pause_btn);
+
+	})
+
+
+})
+
+
+console.dir(Player.mp);	
+
+console.dir(SongListItems[0]);
