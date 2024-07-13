@@ -129,7 +129,7 @@ class musicModule {
 	loadMusic = function(index) {
 		const musicIndex = index;
 
-		musicAudioPlayer.src = `media/music/${music[musicIndex].file}`;
+		musicAudioPlayer.src = `./media/music/${music[musicIndex].file}`;
 		songDetails.children[0].innerText = `Name: ${music[musicIndex].name}`;
 		songDetails.children[1].innerText = `Artist: ${music[musicIndex].artist}`;
 		songDetails.children[2].innerText = `Album: ${music[musicIndex].album}`;
@@ -140,7 +140,7 @@ class musicModule {
 		} else {
 			noAlbumPic.style.display = 'none';
 			albumPic.style.display = 'block';
-			albumPic.src = `media/pic/${music[musicIndex].album_cover}`;
+			albumPic.src = `./media/pic/${music[musicIndex].album_cover}`;
 		}
 
 	}

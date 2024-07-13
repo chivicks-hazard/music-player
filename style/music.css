@@ -16,8 +16,6 @@
 .mp {
 	width: 30%;
 	height: 80%;
-	/* box-shadow: -5px -5px 10px #898989, 
-				5px 5px 10px #ffffff; */
 	border-radius: 30px;
 	border: 2px solid;
 	transition: 2s;
